@@ -1,0 +1,8 @@
+.center-btn {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+.pagination{
+    display: flex;
+}

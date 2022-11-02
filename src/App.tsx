@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import Navigation from './components/Navigation';
+import Footer from './components/Footer';
 
 function App() {
+  const ComponentOne = lazy(() => import('./components/ComponentOne'));
+  const ComponentTwo = lazy(() => import('./components/ComponentTwo'));
+  const ComponentThree = lazy(() => import('./components/ComponentThree'));
+  const ErrorPage = lazy(() => import('./components/ErrorPage'))
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={<h1>Loading...</h1>} >
+      <BrowserRouter>
+        <Navigation />
+        <Routes>
+          <Route path={'/'} element={<ComponentOne />} />
+          <Route path={'/two'} element={<ComponentTwo />} />
+          <Route path={'/three'} element={<ComponentThree />} />
+          <Route path={'*'} element={<ErrorPage />} />
+        </Routes>
+        <Footer/>
+      </BrowserRouter>
+    </Suspense>
   );
 }
 
